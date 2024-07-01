@@ -1,17 +1,22 @@
 "use client"
 
-import { useState, Fragment } from 'react'
+import { useState, Fragment, act } from 'react'
 import Image from 'next/image'
-import { Combobox, ComboboxButton, ComboboxInput, ComboboxOption, Transition } from '@headlessui/react'
+import { Combobox, ComboboxButton, ComboboxInput, ComboboxOption, ComboboxOptions, Transition } from '@headlessui/react'
 
+import { manufacturers } from '@/constants'
 import { SearchManufacturerProps } from '@/types'
 
 const SearchManufacturer = ({ manufacturer, setManufacturer}: SearchManufacturerProps) => {
   const [query, setQuery] = useState("")
+  const filterdManufacturers = query === "" 
+    ? manufacturers
+    : manufacturers.filter((manufacturer) => manufacturer.toLowerCase().replace(/\s+/g, "")
+      .includes(query.toLowerCase().replace(/\s+/g, "")))
 
   return (
     <div className='search-manufacturer'>
-      <Combobox>
+      <Combobox value={manufacturer} onChange={setManufacturer}>
         <div className='relative w-full'>
           <ComboboxButton className="absolute top-[14px]">
             <Image
@@ -35,9 +40,20 @@ const SearchManufacturer = ({ manufacturer, setManufacturer}: SearchManufacturer
             leaveTo='opacity-0'
             afterLeave={() => setQuery("")}
           >
-            <ComboboxOption>
-
-            </ComboboxOption>
+            <ComboboxOptions>
+              {filterdManufacturers.map((item) => (
+                  <ComboboxOption
+                    key={item}
+                    value={item}
+                    className={({focus}) => 
+                      `relative search_manufacturer__option ${focus ? "bg-primary-blue text-white" : "text-gray-900"}`
+                    }
+                  >
+                    <div>{item}</div>
+                  </ComboboxOption>
+                ))
+              }
+            </ComboboxOptions>
           </Transition>
         </div>
       </Combobox>
