@@ -44,7 +44,7 @@ const DashboardSidebar = () => {
   }
 
   return (
-    <div className={`flex flex-col border-r min-h-screen bg-[hsl(var(--card))] p-4 transition-width duration-300 ${isOpen ? 'w-[210px] min-w-[210px]' : 'w-[74px] min-w-[74px]'}`}>
+    <div className={`flex flex-col border-r min-h-screen sticky top-0 bg-[hsl(var(--card))] p-4 transition-width duration-300 ${isOpen ? 'w-[210px] min-w-[210px]' : 'w-[74px] min-w-[74px]'}`}>
       <div className='flex flex-grow flex-col gap-4 justify-center'>
         {menuList.map((item, index) => (
           <MenuItem key={index} item={item} />
