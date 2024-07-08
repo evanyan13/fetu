@@ -2,7 +2,7 @@
 
 import Link from 'next/link'
 import { useState, useMemo } from 'react'
-import { LayoutGrid, User, Settings, ChevronLeft, ChevronRight } from 'lucide-react'
+import { LayoutGrid, Users, Settings, ChevronLeft, ChevronRight } from 'lucide-react'
 import { DashboardSidebarItem } from '@/types'
 import { usePathname, useRouter } from 'next/navigation'
 
@@ -21,9 +21,9 @@ const DashboardSidebar = () => {
       icon: <LayoutGrid />
     },
     {
-      title: "User",
-      href: "/user",
-      icon: <User />,
+      title: "Patients",
+      href: "/patients",
+      icon: <Users />,
     },
     {
       title: "Setting",
@@ -45,7 +45,7 @@ const DashboardSidebar = () => {
 
   return (
     <div className={`flex flex-col border-r min-h-screen bg-[hsl(var(--card))] p-4 transition-width duration-300 ${isOpen ? 'w-[210px] min-w-[210px]' : 'w-[74px] min-w-[74px]'}`}>
-      <div className='flex flex-grow flex-col gap-3 justify-center'>
+      <div className='flex flex-grow flex-col gap-4 justify-center'>
         {menuList.map((item, index) => (
           <MenuItem key={index} item={item} />
         ))}

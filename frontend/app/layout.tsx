@@ -3,8 +3,8 @@ import { Inter as FontSans } from "next/font/google";
 
 import "@/styles/globals.css";
 import { cn } from "@/lib/utils"
-import DashboardLayout from "./dashboard/layout";
-import DashboardSidebar from "../components/DashboardSidebar";
+import DashboardSidebar from "../components/dashboard/DashboardSidebar";
+import { ThemeProvider } from "@/components/dashboard/ThemeProvider";
 
 const fontSans = FontSans({
   subsets: ["latin"],
@@ -24,14 +24,21 @@ export default function RootLayout({
   return (
     <html lang="en">
       <body className={cn(
-          "min-h-screen bg-background font-sans antialiased flex items-start justify-between",
-          fontSans.variable,
-        )}
+        "min-h-screen bg-background font-sans antialiased flex items-start justify-between",
+        fontSans.variable,
+      )}
       >
-        <DashboardSidebar />
-        <main className="w-full h-full">
-          {children}
-        </main>
+        <ThemeProvider
+          attribute="class"
+          defaultTheme="system"
+          enableSystem
+          disableTransitionOnChange
+        >
+          <DashboardSidebar />
+          <main className="w-full h-full">
+            {children}
+          </main>
+        </ThemeProvider>
       </body>
     </html>
   );
