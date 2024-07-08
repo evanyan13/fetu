@@ -29,11 +29,11 @@ const chartData = [
 ]
 
 const chartConfig = {
-  desktop: {
+  actual: {
     label: "Actual",
     color: "hsl(var(--chart-1))",
   },
-  mobile: {
+  predicted: {
     label: "Predicted",
     color: "hsl(var(--chart-2))",
   },
@@ -63,21 +63,21 @@ export function LabourProgressChart() {
               tickLine={false}
               axisLine={false}
               tickMargin={8}
-            // tickFormatter={(value) => value.slice(0, 3)}
+              padding={{ left: 20, right: 20 }}
             />
             <YAxis />
             <ChartTooltip cursor={false} content={<ChartTooltipContent />} />
             <Line
               dataKey="actual"
               type="monotone"
-              stroke="var(--color-desktop)"
+              stroke="var(--color-actual)"
               strokeWidth={2}
               dot={true}
             />
             <Line
               dataKey="predicted"
               type="monotone"
-              stroke="var(--color-mobile)"
+              stroke="var(--color-predicted)"
               strokeWidth={2}
               dot={true}
             />
