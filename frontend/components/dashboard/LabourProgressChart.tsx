@@ -19,13 +19,13 @@ import {
 } from "@/components/ui/chart"
 
 const chartData = [
-  { time: "00:00", actual: 35, predicted: 50 },
-  { time: "00:30", actual: 42, predicted: 58 },
-  { time: "01:00", actual: 62, predicted: 61 },
-  { time: "01:30", actual: 82, predicted: 70 },
-  { time: "02:00", actual: 83, predicted: 92 },
-  { time: "02:30", actual: 96, predicted: 120 },
-  { time: "03:00", actual: 106, predicted: 140 },
+  { time: "00:00", actual: 10, predicted: 15 },
+  { time: "00:30", actual: 25, predicted: 20 },
+  { time: "01:00", actual: 30, predicted: 30 },
+  { time: "01:30", actual: 35, predicted: 42 },
+  { time: "02:00", actual: 45, predicted: 43 },
+  { time: "02:30", actual: 50, predicted: 60 },
+  { time: "03:00", actual: 70, predicted: 80 },
 ]
 
 const chartConfig = {
@@ -48,24 +48,26 @@ export function LabourProgressChart() {
       </CardHeader>
 
       <CardContent className="pl-0">
-        <ChartContainer config={chartConfig} className="w-full h-64">
+        <ChartContainer config={chartConfig} className="w-full h-full">
           <LineChart
             accessibilityLayer
             data={chartData}
             margin={{
               // left: 12,
-              right: 12,
+              // right: 12,
             }}
           >
             <CartesianGrid vertical={false} />
             <XAxis
               dataKey="time"
-              tickLine={false}
-              axisLine={false}
+              tickLine={true}
+              axisLine={true}
               tickMargin={8}
               padding={{ left: 20, right: 20 }}
             />
-            <YAxis />
+            <YAxis
+              domain={[0, 100]}
+            />
             <ChartTooltip cursor={false} content={<ChartTooltipContent />} />
             <Line
               dataKey="actual"

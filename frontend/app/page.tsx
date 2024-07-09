@@ -31,7 +31,7 @@ export default function Home() {
           <div className='col-span-2'>
             <PatientDetailsCard />
           </div>
-          <div className='row-span-3'>
+          <div className='row-span-4'>
             <CtgChart />
           </div>
           <div className='col-span-2'>
