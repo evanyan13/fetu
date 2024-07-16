@@ -1,12 +1,14 @@
-"use client"
+"use client";
 
-import Link from 'next/link'
-import { useState, useMemo } from 'react'
-import { LayoutGrid, Users, Settings, ChevronLeft, ChevronRight } from 'lucide-react'
-import { DashboardSidebarItem } from '@/types'
-import { usePathname, useRouter } from 'next/navigation'
+import Link from "next/link";
+import { useState, useMemo } from "react";
+import { LayoutGrid, Users, Settings, ChevronLeft, ChevronRight, Menu } from "lucide-react";
+import { DashboardSidebarItem } from "@/types";
+import { usePathname, useRouter } from "next/navigation";
+import { Button } from "../ui/button";
+import { Sheet, SheetContent, SheetDescription, SheetHeader, SheetTitle, SheetTrigger } from "@/components/ui/sheet";
 
-const DashboardSidebar = () => {
+const DashboardSidebar = ({isMobile} : {isMobile: boolean}) => {
   const [isOpen, setStatus] = useState(false);
   const currentPath = usePathname();
 
@@ -14,32 +16,50 @@ const DashboardSidebar = () => {
     setStatus(!isOpen);
   };
 
-  const menuList = useMemo(() => [
-    {
-      title: "Dashboard",
-      href: "/",
-      icon: <LayoutGrid />
-    },
-    {
-      title: "Patients",
-      href: "/patients",
-      icon: <Users />,
-    },
-    {
-      title: "Setting",
-      href: "/settings",
-      icon: <Settings />,
-    }
-  ], []);
+  const menuList = useMemo(
+    () => [
+      {
+        title: "Dashboard",
+        href: "/",
+        icon: <LayoutGrid />,
+      },
+      {
+        title: "Patients",
+        href: "/patients",
+        icon: <Users />,
+      },
+      {
+        title: "Setting",
+        href: "/settings",
+        icon: <Settings />,
+      },
+    ],
+    []
+  );
 
   const MenuItem = ({ item }: { item: DashboardSidebarItem }) => {
     return (
       <Link href={item.href}>
-        <div className={`flex p-2 rounded-md ${isOpen ? 'gap-2 justify-start' : 'justify-center'} ${currentPath === item.href ? 'bg-blue-600 text-white' : 'hover:bg-gray-200'}`} >
+        <div className={`flex p-2 rounded-md ${isOpen ? "gap-2 justify-start" : "justify-center"} ${currentPath === item.href ? "bg-blue-600 text-white" : "hover:bg-gray-200"}`}>
           {item.icon}
           {isOpen && <span>{item.title}</span>}
         </div>
       </Link>
+    );
+  };
+
+  if (isMobile) {
+    return (
+      <Sheet>
+        <SheetTrigger className="absolute top-5 left-5">
+          <Menu className="w-[24px] h-[24px]" />
+        </SheetTrigger>
+        <SheetContent side="top" className="w-full pt-[40px]">
+          {menuList.map((item, index) => (
+            <MenuItem key={index} item={item} />
+          ))}
+        </SheetContent>
+      </Sheet>
     );
   }
 
@@ -54,7 +74,7 @@ const DashboardSidebar = () => {
         {isOpen ? <ChevronLeft /> : <ChevronRight />}
       </button>
     </div>
-  )
-}
+  );
+};
 
-export default DashboardSidebar
+export default DashboardSidebar;
