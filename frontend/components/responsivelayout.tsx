@@ -46,7 +46,7 @@ const MobileLayout = ({ children }: { children: React.ReactNode }) =>
   </div>
 
 
-const DesktopLayout = ({ children }: { children: React.ReactNode }) => <div className="flex h-screen">
+const DesktopLayout = ({ children }: { children: React.ReactNode }) => <div className="flex h-screen w-full">
     <DashboardSidebar isMobile={false} />
     <main className="w-full h-full overflow-auto">
       {children}

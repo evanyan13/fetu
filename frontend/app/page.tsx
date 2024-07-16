@@ -17,7 +17,7 @@ export default function Home() {
 
   if (isMobile) {
     return (
-      <main className="h-full">
+      <main className="h-full w-full">
         <div className="flex-1 space-y-4 p-4 md:p-8">
           <div id="top-bar" className="flex w-full justify-end items-center">
             <div className="flex flex-row gap-2">
@@ -94,7 +94,7 @@ export default function Home() {
   }
 
   return (
-    <main className="h-full">
+    <main className="h-full w-full">
       <div className="flex-1 space-y-4 p-4 pt-6 md:p-8">
         <div id="top-bar" className="flex w-full justify-between">
           <h2 className="text-3xl font-bold tracking-tight">Welcome back Dr Lee 👋</h2>
