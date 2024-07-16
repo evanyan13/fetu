@@ -35,7 +35,7 @@ export default function Home() {
             <PopoverTrigger>
               <Button variant="outline">
                 <BookHeart className="h-[16px] w-[16px] text-red-500 mr-1" />
-                <span className="font-semibold">View patient's info</span>
+                <span className="font-semibold">View patient&apos;s info</span>
               </Button>
             </PopoverTrigger>
             <PopoverContent className="mx-4 w-1/2">
