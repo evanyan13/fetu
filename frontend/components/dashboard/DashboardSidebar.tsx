@@ -10,10 +10,15 @@ import { Sheet, SheetContent, SheetDescription, SheetHeader, SheetTitle, SheetTr
 
 const DashboardSidebar = ({isMobile} : {isMobile: boolean}) => {
   const [isOpen, setStatus] = useState(false);
+  const [isSheetOpen, setIsSheetOpen] = useState(false);
   const currentPath = usePathname();
 
   const handleToggle = () => {
     setStatus(!isOpen);
+  };
+
+  const handleLinkClick = () => {
+    setIsSheetOpen(false);
   };
 
   const menuList = useMemo(
@@ -28,21 +33,26 @@ const DashboardSidebar = ({isMobile} : {isMobile: boolean}) => {
         href: "/patients",
         icon: <Users />,
       },
-      {
-        title: "Setting",
-        href: "/settings",
-        icon: <Settings />,
-      },
     ],
     []
   );
 
   const MenuItem = ({ item }: { item: DashboardSidebarItem }) => {
+    if (isMobile) {
+      return (
+        <Link href={item.href} onClick={handleLinkClick}>
+          <div className={`flex p-2 m-2 rounded-md ${currentPath === item.href ? "bg-blue-400 text-white" : "hover:bg-gray-200"}`}>
+            {item.icon}
+            <span className="font-semibold ml-2">{item.title}</span>
+          </div>
+        </Link>
+      ); 
+    }
     return (
       <Link href={item.href}>
-        <div className={`flex p-2 rounded-md ${isOpen ? "gap-2 justify-start" : "justify-center"} ${currentPath === item.href ? "bg-blue-600 text-white" : "hover:bg-gray-200"}`}>
+        <div className={`flex p-2 rounded-md ${currentPath === item.href ? "bg-blue-400 text-white" : "hover:bg-gray-200"}`}>
           {item.icon}
-          {isOpen && <span>{item.title}</span>}
+          {isOpen && <span className={`${currentPath === item.href ? "text-white" : "hover:bg-gray-200"}`}>{item.title}</span>}
         </div>
       </Link>
     );
@@ -50,7 +60,7 @@ const DashboardSidebar = ({isMobile} : {isMobile: boolean}) => {
 
   if (isMobile) {
     return (
-      <Sheet>
+      <Sheet open={isSheetOpen} onOpenChange={setIsSheetOpen}>
         <SheetTrigger className="absolute top-5 left-5">
           <Menu className="w-[24px] h-[24px]" />
         </SheetTrigger>

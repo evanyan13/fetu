@@ -6,7 +6,7 @@ import { cn } from "@/lib/utils";
 import DashboardSidebar from "../components/dashboard/DashboardSidebar";
 import { ThemeProvider } from "@/components/dashboard/ThemeProvider";
 import { SettingsProvider } from "./context/MobileContext";
-import ResponsiveLayout from "@/components/ResponsiveLayout";
+import ResponsiveLayout from "@/components/responsivelayout";
 
 const fontSans = FontSans({
   subsets: ["latin"],
