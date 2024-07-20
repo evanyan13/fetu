@@ -5,8 +5,8 @@ import "@/styles/globals.css";
 import { cn } from "@/lib/utils";
 import DashboardSidebar from "../components/dashboard/DashboardSidebar";
 import { ThemeProvider } from "@/components/dashboard/ThemeProvider";
-import ResponsiveLayout from "@/components/responsivelayout";
 import { SettingsProvider } from "./context/MobileContext";
+import ResponsiveLayout from "@/components/responsivelayout";
 
 const fontSans = FontSans({
   subsets: ["latin"],
