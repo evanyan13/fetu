@@ -58,7 +58,7 @@ export function LabourProgressChart() {
     const interval = setInterval(() => {
       setChartData((prevData) => {
         const lastEntry = prevData[prevData.length - 1];
-        const newTime = addMinutes(lastEntry.time, 10); // Add 30 minutes to the last time
+        const newTime = addMinutes(lastEntry.time, 10);
 
         const newActual = getGradualValue(lastEntry.actual);
         const newPredicted = getGradualValue(lastEntry.predicted);
@@ -69,9 +69,9 @@ export function LabourProgressChart() {
           predicted: newPredicted,
         };
 
-        return [...prevData.slice(-6), newDataPoint]; // Keep only the last 7 data points
+        return [...prevData.slice(-6), newDataPoint];
       });
-    }, 5000); // Update every 10 seconds
+    }, 5000);
 
     return () => clearInterval(interval);
   }, []);
