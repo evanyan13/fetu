@@ -17,16 +17,20 @@ import {
   ChartTooltip,
   ChartTooltipContent,
 } from "@/components/ui/chart"
+import { useEffect, useMemo, useState } from "react"
+import { addMinutes } from "@/lib/utils"
 
-const chartData = [
-  { time: "00:00", actual: 10, predicted: 15 },
-  { time: "00:30", actual: 25, predicted: 20 },
-  { time: "01:00", actual: 30, predicted: 30 },
-  { time: "01:30", actual: 35, predicted: 42 },
-  { time: "02:00", actual: 45, predicted: 43 },
-  { time: "02:30", actual: 50, predicted: 60 },
-  { time: "03:00", actual: 70, predicted: 80 },
-]
+interface ChartDataPoint {
+  time: string,
+  actual: number,
+  predicted: number
+}
+
+// Helper functions to generate gradually increasing values
+function getGradualValue(prevValue: number) {
+  const increment = Math.random() * 5 + 2; // Increase by a random value between 2 and 7
+  return prevValue + increment;
+}
 
 const chartConfig = {
   actual: {
@@ -40,11 +44,52 @@ const chartConfig = {
 } satisfies ChartConfig
 
 export function LabourProgressChart() {
+  const [chartData, setChartData] = useState<ChartDataPoint[]>([
+    { time: "00:00", actual: 10, predicted: 15 },
+    { time: "00:10", actual: 13, predicted: 17 },
+    { time: "00:20", actual: 23, predicted: 30 },
+    { time: "00:30", actual: 35, predicted: 38 },
+    { time: "00:40", actual: 45, predicted: 40 },
+    { time: "00:50", actual: 50, predicted: 55 },
+    { time: "01:00", actual: 55, predicted: 58 },
+  ])
+
+  useEffect(() => {
+    const interval = setInterval(() => {
+      setChartData((prevData) => {
+        const lastEntry = prevData[prevData.length - 1];
+        const newTime = addMinutes(lastEntry.time, 10); // Add 30 minutes to the last time
+
+        const newActual = getGradualValue(lastEntry.actual);
+        const newPredicted = getGradualValue(lastEntry.predicted);
+
+        const newDataPoint = {
+          time: newTime,
+          actual: newActual,
+          predicted: newPredicted,
+        };
+
+        return [...prevData.slice(-6), newDataPoint]; // Keep only the last 7 data points
+      });
+    }, 5000); // Update every 10 seconds
+
+    return () => clearInterval(interval);
+  }, []);
+
+  const renderLastUpdatedAt = useMemo(() => {
+    if (chartData.length == 0) {
+      return "";
+    }
+    const lastEntry = chartData[chartData.length - 1];
+    return lastEntry.time;
+  }, [chartData]);
+  
   return (
     <Card>
       <CardHeader>
         <CardTitle>Labour Progression Analytics</CardTitle>
         <CardDescription>Actual vs. Predicted Labour Progression</CardDescription>
+        <CardDescription className='text-xs'>Last updated at {renderLastUpdatedAt} (updated every 10 minutes)</CardDescription>
       </CardHeader>
 
       <CardContent className="pl-0">
